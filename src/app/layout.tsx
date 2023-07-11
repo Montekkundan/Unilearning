@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { Toaster } from '@/components/ui/Toaster'
 
 import '@/styles/globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,14 +26,16 @@ export default function RootLayout({
         'bg-white text-slate-900 antialiased light',
         inter.className
       )}>
-      <body className='min-h-screen pt-12 bg-slate-50 antialiased'>
-      
+      <body className='min-h-screen pt-12 bg-slate-50 dark:bg-slate-900 antialiased'>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {/* @ts-expect-error Server Component */}
           <Navbar />
 
           <div className='container max-w-7xl mx-auto h-full pt-12'>
             {children}
           </div>
         <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )

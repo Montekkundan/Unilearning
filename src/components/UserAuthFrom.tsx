@@ -54,7 +54,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
         className='w-full'
         isLoading={isLoading}
         >
-          {isLoading ? null : <><Icons.github className='h-4 w-4 mr-2' /> work in progress</>  }
+          {isLoading ? null : <><Icons.github className='h-4 w-4 mr-2 fill-white dark:fill-black' /> work in progress</>  }
       </Button>
     </div>
   )
