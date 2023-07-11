@@ -1,4 +1,5 @@
 import MiniCreatePost from '@/components/MiniCreatePost'
+import PostFeed from '@/components/PostFeed'
 // import PostFeed from '@/components/PostFeed'
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { getAuthSession } from '@/lib/auth'
@@ -42,7 +43,7 @@ const page = async ({ params }: PageProps) => {
         uni/{discussion.name}
       </h1>
       <MiniCreatePost session={session} />
-      {/* <PostFeed initialPosts={discussion.posts} discussionName={discussion.name} /> */}
+      <PostFeed initialPosts={discussion.posts} discussionName={discussion.name} />
     </>
   )
 }
