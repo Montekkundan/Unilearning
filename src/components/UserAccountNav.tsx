@@ -43,7 +43,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href='/r/create'>Create Community</Link>
+          <Link href='/uni/create'>Create Discussion</Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
@@ -60,6 +60,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           }}>
           Sign out
         </DropdownMenuItem>
+        
       </DropdownMenuContent>
     </DropdownMenu>
   )

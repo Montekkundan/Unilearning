@@ -67,5 +67,19 @@ export const authOptions: NextAuthOptions = {
     },
   },
 }
+export const deleteUser = async (userId: string) => {
+  try {
+    await db.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return true;
+  } catch (error) {
+    // console.error('An error occurred while deleting the user:', error);
+    return false;
+  }
+};
+
 
 export const getAuthSession = () => getServerSession(authOptions)
