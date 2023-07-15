@@ -72,7 +72,7 @@ const Post: FC<PostProps> = ({
         </div>
       </div>
 
-      <div className='bg-gray-50 z-20 text-sm px-4 py-4 sm:px-6'>
+      <div className='bg-gray-50 rounded-b-md dark:bg-[#18181b] z-20 text-sm px-4 py-4 sm:px-6'>
         <Link
           href={`/uni/${discussionName}/post/${post.id}`}
           className='w-fit flex items-center gap-2'>

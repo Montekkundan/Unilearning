@@ -25,10 +25,10 @@ export default function RootLayout({
     <html
       lang='en'
       className={cn(
-        'bg-white text-slate-900 dark:text-slate-100 antialiased light',
+        'bg-white text-slate-900  antialiased light',
         inter.className
       )}>
-      <body className='min-h-screen pt-12 bg-slate-50 dark:bg-slate-900 antialiased'>
+      <body className='min-h-screen pt-12 bg-slate-50  antialiased'>
         <Providers>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {/* @ts-expect-error Server Component */}
