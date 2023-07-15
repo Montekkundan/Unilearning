@@ -92,7 +92,15 @@ export const Editor: React.FC<EditorProps> = ({ discussionId }) => {
         inlineToolbar: true,
         data: { blocks: [] },
         tools: {
-          header: Header,
+          header: {
+            class: Header as any,
+            inlineToolbar: true,
+            config: {
+              placeholder: 'Enter a header',
+              levels: [1, 2, 3, 4, 5, 6],
+              defaultLevel: 3,
+            },
+          },
           linkTool: {
             class: LinkTool,
             config: {
