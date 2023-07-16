@@ -68,6 +68,8 @@ model User {
 model Discussion {
   id        String   @id @default(cuid())
   name      String   @unique
+  description String?      
+  tags        DiscussionTag[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
@@ -78,6 +80,23 @@ model Discussion {
 
   @@index([name])
   @@index([creatorId])
+}
+
+model Tag {
+  id          String          @id @default(cuid())
+  name        String          @unique
+  discussions DiscussionTag[] 
+}
+
+model DiscussionTag {
+  discussion Discussion @relation(fields: [discussionId], references: [id])
+  discussionId String
+  tag Tag @relation(fields: [tagId], references: [id])
+  tagId String
+
+  @@id([discussionId, tagId])
+  @@index([tagId])
+  @@index([discussionId])
 }
 
 model Subscription {
