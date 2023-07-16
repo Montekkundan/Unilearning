@@ -17,8 +17,9 @@ const Page = () => {
 
   const { mutate: createDiscussion, isLoading } = useMutation({
     mutationFn: async () => {
+      const sanitizedInput = input.trim().replace(/\s+/g, '-')
       const payload: CreateDiscussionPayload = {
-        name: input,
+        name: sanitizedInput,
       }
 
       const { data } = await axios.post('/api/discussion', payload)
