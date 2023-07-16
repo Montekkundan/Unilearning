@@ -4,7 +4,8 @@
 
 Learn build and share your knowledge with the world.
 
-Cache from Upstash
+Nextjs for frontend
+Cache from Upstash (Redis)
 Image to Uploadthing
 Database -> PlanetScale
 
