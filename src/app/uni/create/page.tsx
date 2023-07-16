@@ -13,6 +13,8 @@ import { useState } from 'react'
 const Page = () => {
   const router = useRouter()
   const [input, setInput] = useState<string>('')
+  const [descriptionInput, setDescriptionInput] = useState<string>('')
+
   const { loginToast } = useCustomToasts()
 
   const { mutate: createDiscussion, isLoading } = useMutation({
@@ -20,6 +22,7 @@ const Page = () => {
       const sanitizedInput = input.trim().replace(/\s+/g, '-')
       const payload: CreateDiscussionPayload = {
         name: sanitizedInput,
+        description: descriptionInput,
       }
 
       const { data } = await axios.post('/api/discussion', payload)
@@ -83,6 +86,19 @@ const Page = () => {
               className='pl-8'
             />
           </div>
+
+          <div>
+          <p className='text-lg font-medium'>Description</p>
+          <p className='text-xs pb-2'>
+            Descriptions help users understand what the discussion is about.
+          </p>
+          <div className='relative'>
+            <Input
+              value={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+            />
+          </div>
+        </div>
         </div>
 
         <div className='flex justify-end gap-4'>

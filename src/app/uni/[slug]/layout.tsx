@@ -32,6 +32,11 @@ const Layout = async ({
           votes: true,
         },
       },
+      tags: {
+        include: {
+          tag: true,
+        }
+      }
     },
   })
 
@@ -82,12 +87,32 @@ const Layout = async ({
                   </time>
                 </dd>
               </div>
+              <div className='flex flex-col justify-between gap-y-4 py-3'>
+  <dt className='text-gray-500'>Description</dt>
+  <dd className='flex items-start gap-x-2'>
+    <div className='text-gray-900'>
+      {discussion.description ? discussion.description : "No description provided."}
+    </div>
+  </dd>
+</div>
               <div className='flex justify-between gap-x-4 py-3'>
                 <dt className='text-gray-500'>Members</dt>
                 <dd className='flex items-start gap-x-2'>
                   <div className='text-gray-900'>{memberCount}</div>
                 </dd>
               </div>
+              <div className='flex flex-col gap-y-4 py-3'>
+  <dt className='text-gray-500'>Tags</dt>
+  {discussion.tags.length > 0 ? (
+    discussion.tags.map((discussionTag) => (
+      <span key={discussionTag.tag.id} className='bg-blue-100 text-blue-500 rounded p-1 text-xs'>
+        {discussionTag.tag.name}
+      </span>
+    ))
+  ) : (
+    <dd className='text-gray-700'>No tags.</dd>
+  )}
+</div>
               {discussion.creatorId === session?.user?.id ? (
                 <div className='flex justify-between gap-x-4 py-3'>
                   <dt className='text-gray-500'>You created this discussion</dt>
