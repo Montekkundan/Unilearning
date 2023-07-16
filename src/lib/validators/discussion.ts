@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 export const DiscussionValidator = z.object({
   name: z.string().min(3).max(21),
-  description: z.string().optional(),
-    tags: z.array(z.string()).optional(),
+  description: z.string().max(200).optional(),
+  tags: z.array(z.string()).optional(),
 })
 
 export const DiscussionSubscriptionValidator = z.object({
