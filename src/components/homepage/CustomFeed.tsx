@@ -3,6 +3,8 @@ import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import PostFeed from '../PostFeed'
 import { notFound } from 'next/navigation'
+import { Button } from '@/components/ui/Button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 
 const CustomFeed = async () => {
   const session = await getAuthSession()
@@ -39,7 +41,19 @@ const CustomFeed = async () => {
     take: INFINITE_SCROLL_PAGINATION_RESULTS,
   })
 
-  return <PostFeed initialPosts={posts} />
+  return <>
+ <Tabs defaultValue="recent">
+  <TabsList>
+    <TabsTrigger value="recent">Recent</TabsTrigger>
+    <TabsTrigger value="upvote">Most Upvoted</TabsTrigger>
+  </TabsList>
+  <TabsContent value="recent">
+    <PostFeed initialPosts={posts} />
+    </TabsContent>
+  <TabsContent value="upvote">upvote.</TabsContent>
+</Tabs>
+  
+  </> 
 }
 
 export default CustomFeed
