@@ -1,158 +1,115 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
-import * as z from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { User } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/Button"
+import { Button } from '@/components/ui/Button'
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/Form"
-import { Input } from "@/components/ui/Input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select"
-import { Textarea } from "@/components/ui/Textarea"
-import { toast } from "@/hooks/use-toast"
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card'
+import { Input } from '@/components/ui/Input'
+import { Label } from '@/components/ui/Label'
+import { toast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
+import { UsernameValidator } from '@/lib/validators/username'
+import { useMutation } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
 
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-})
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>
-
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "built by montek.",
-  urls: [
-    { value: "https://www.montek.com" },
-    { value: "https://blog.montek.com" },
-  ],
+interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
+  user: Pick<User, 'id' | 'username'>
 }
 
-export function ProfileForm() {
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues,
-    mode: "onChange",
+type FormData = z.infer<typeof UsernameValidator>
+
+export function ProfileForm({ user, className, ...props }: UserNameFormProps) {
+  const router = useRouter()
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(UsernameValidator),
+    defaultValues: {
+      name: user?.username || '',
+    },
   })
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  })
+  const { mutate: updateUsername, isLoading } = useMutation({
+    mutationFn: async ({ name }: FormData) => {
+      const payload: FormData = { name }
 
-  function onSubmit() {
-   
-  }
+      const { data } = await axios.patch(`/api/username/`, payload)
+      return data
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 409) {
+          return toast({
+            title: 'Username already taken.',
+            description: 'Please choose another username.',
+            variant: 'destructive',
+          })
+        }
+      }
+
+      return toast({
+        title: 'Something went wrong.',
+        description: 'Your username was not updated. Please try again.',
+        variant: 'destructive',
+      })
+    },
+    onSuccess: () => {
+      toast({
+        description: 'Your username has been updated.',
+      })
+      router.refresh()
+    },
+  })
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="montek" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+    <form
+      className={cn(className)}
+      onSubmit={handleSubmit((e) => updateUsername(e))}
+      {...props}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Your username</CardTitle>
+          <CardDescription>
+            Please enter a display name you are comfortable with.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className='relative grid gap-1'>
+            <div className='absolute top-0 left-0 w-8 h-10 grid place-items-center'>
+              <span className='text-sm text-zinc-400'>u/</span>
+            </div>
+            <Label className='sr-only' htmlFor='name'>
+              Name
+            </Label>
+            <Input
+              id='name'
+              className='w-[400px] pl-6'
+              size={32}
+              {...register('name')}
             />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
-        </div>
-        <Button type="submit">Update profile</Button>
-      </form>
-    </Form>
+            {errors?.name && (
+              <p className='px-1 text-xs text-red-600'>{errors.name.message}</p>
+            )}
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button isLoading={isLoading}>Change name</Button>
+        </CardFooter>
+      </Card>
+    </form>
   )
 }
