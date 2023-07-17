@@ -44,13 +44,7 @@ export default async function Home() {
                 favorite discussions.
               </p>
             </div>
-            <Link
-              className={buttonVariants({
-                className: 'w-full mt-4 mb-6',
-              })}
-              href={`/uni/create`}>
-              Create Discussion
-            </Link>
+            
           </dl>
         </div>
       </div>
