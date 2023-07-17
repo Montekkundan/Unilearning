@@ -4,6 +4,7 @@ import { buttonVariants } from './ui/Button'
 import { getAuthSession } from '@/lib/auth'
 import { UserAccountNav } from './UserAccountNav'
 import { ThemeToggle } from './ThemeToggle'
+import { NavMenu } from './NavMenu'
 
 
 const Navbar = async () => {
@@ -20,7 +21,7 @@ const Navbar = async () => {
           <p className='hidden text-zinc-700  text-sm font-medium md:block'>Unilearning</p>
         </a>
 
-  
+        <NavMenu />
 
 
         <div className='flex items-center justify-between gap-6'>
