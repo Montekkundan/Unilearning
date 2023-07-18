@@ -25,6 +25,7 @@ export default async function Home() {
             return 'Discussion';
     }
 }
+
   return (
     <>
       {
@@ -41,7 +42,9 @@ export default async function Home() {
   <SearchBar />
 </div>
       <div className='grid grid-cols-1 md:grid-cols-4 gap-y-4 md:gap-x-4 py-6'>
-        <Sidebar className='hidden md:block md:col-span-1'/>
+      <Sidebar className='hidden md:block md:col-span-1' sidebarItems={session?.user?.sidebar || []} currentScreen={session?.user?.homeScreen} />
+
+
         {/* @ts-expect-error Server Component */}
         <div className='md:col-span-2'>{session ? <CustomFeed /> : <GeneralFeed />}</div>
 
