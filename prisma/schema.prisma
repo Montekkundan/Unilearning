@@ -57,12 +57,33 @@ model User {
 
   username String? @unique
 
+   homeScreen  HomeScreen? @default(FEED)
+  sidebar     UserSidebar[] 
+
   image       String?
   accounts    Account[]
   sessions    Session[]
   Post        Post[]
   Comment     Comment[]
   CommentVote CommentVote[]
+}
+enum HomeScreen {
+  FEED
+  DISCUSSIONS
+  NEWS
+}
+model UserSidebar {
+  id      String   @id @default(cuid())
+  user    User     @relation(fields: [userId], references: [id],  onDelete: Cascade)
+  userId  String
+  sidebar Sidebar
+
+  @@index([userId])
+}
+enum Sidebar {
+  FEED
+  DISCUSSIONS
+  NEWS
 }
 
 model Discussion {
@@ -116,7 +137,7 @@ model Post {
   content     Json?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
   discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
   discussionId String

@@ -30,6 +30,22 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
     }
   }
 
+  const loginWithGitHub = async () => {
+    setIsLoading(true)
+
+    try {
+      await signIn('github')
+    } catch (error) {
+      toast({
+        title: 'There was a problem....',
+        description: 'There was an error logging in with GitHub',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className={cn('flex justify-center flex-col space-y-2', className)} {...props}>
       <Button
@@ -53,8 +69,9 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
         size='sm'
         className='w-full'
         isLoading={isLoading}
+        onClick={loginWithGitHub}
         >
-          {isLoading ? null : <><Icons.github className='h-4 w-4 mr-2 fill-white dark:fill-black' /> work in progress</>  }
+          {isLoading ? null : <><Icons.github className='h-4 w-4 mr-2 fill-white dark:fill-black' /> work in progress</>   }
       </Button>
     </div>
   )

@@ -13,10 +13,25 @@ export const fetchCache = 'force-no-store'
 
 export default async function Home() {
   const session = await getAuthSession()
-
+  function formatHomeScreen(homeScreen: any) {
+    switch(homeScreen) {
+        case 'FEED':
+            return 'Your Feed';
+        case 'DISCUSSIONS':
+            return 'Discussions';
+        case 'NEWS':
+            return 'News';
+        default:
+            return 'Discussion';
+    }
+}
   return (
     <>
-      <h1 className='font-bold text-3xl md:text-4xl'>Your feed</h1>
+      {
+        session?.user?.homeScreen
+        ? <h1 className='font-bold text-3xl md:text-4xl'>{formatHomeScreen(session.user.homeScreen)}</h1>
+        : <h1 className='font-bold text-3xl md:text-4xl'>Feed</h1>
+    }
       <div className='flex flex-row gap-x-4 pt-3'>
         <h3 className='font-bold text-3xl md:text-xl'>#tags</h3>
         <h3 className='font-bold text-3xl md:text-xl'>#tags</h3>
