@@ -1,8 +1,16 @@
 import { Separator } from "@/components/ui/Separator";
 import { DisplayForm } from "./DisplayForm";
+import { authOptions, getAuthSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { HomeScreen } from "@prisma/client";
 
 
-export default function SettingsDisplayPage() {
+export default async function SettingsDisplayPage() {
+  const session = await getAuthSession()
+
+  if (!session?.user) {
+    redirect(authOptions?.pages?.signIn || '/login')
+  }
   return (
     <div className="space-y-6">
       <div>
@@ -12,7 +20,10 @@ export default function SettingsDisplayPage() {
         </p>
       </div>
       <Separator />
-      <DisplayForm />
+      <DisplayForm user={{
+  id: session.user.id,
+  homeScreen: session.user.homeScreen as HomeScreen || null,
+}} />
     </div>
   )
 }
