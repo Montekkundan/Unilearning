@@ -1,8 +1,8 @@
 
 import SearchBar from '@/components/SearchBar'
 import { Sidebar } from '@/components/Sidebar'
-import CustomFeed from '@/components/homepage/CustomFeed'
-import GeneralFeed from '@/components/homepage/GeneralFeed'
+import CustomFeed from '@/components/FEED/CustomFeed'
+import GeneralFeed from '@/components/FEED/GeneralFeed'
 import { buttonVariants } from '@/components/ui/Button'
 import { getAuthSession } from '@/lib/auth'
 import { Home as HomeIcon } from 'lucide-react'

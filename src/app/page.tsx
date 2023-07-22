@@ -1,13 +1,14 @@
 
 import SearchBar from '@/components/SearchBar'
 import { Sidebar } from '@/components/Sidebar'
-import CustomFeed from '@/components/homepage/CustomFeed'
-import GeneralFeed from '@/components/homepage/GeneralFeed'
+import CustomFeed from '@/components/FEED/CustomFeed'
+import GeneralFeed from '@/components/FEED/GeneralFeed'
 import { buttonVariants } from '@/components/ui/Button'
 import { getAuthSession } from '@/lib/auth'
 import { NAME } from '@/lib/constants'
 import { Home as HomeIcon } from 'lucide-react'
 import Link from 'next/link'
+import GeneralDiscussionFeed from '@/components/DISCUSSIONS/GeneralDiscussionFeed'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -25,6 +26,25 @@ export default async function Home() {
         default:
             return 'Discussion';
     }
+}
+function getFeed() {
+  if (!session) {
+    {/* @ts-expect-error Server Component */}
+    return <GeneralFeed />;
+  }
+  switch(session.user.homeScreen) {
+    case 'FEED':
+      {/* @ts-expect-error Server Component */}
+      return <CustomFeed />;
+    case 'DISCUSSIONS':
+      {/* @ts-expect-error Server Component */}
+      return <GeneralDiscussionFeed />;
+    // case 'NEWS':
+    //   return <NewsFeed />;
+    default:
+      {/* @ts-expect-error Server Component */}
+      return <GeneralFeed />;
+  }
 }
 
   return (
@@ -46,8 +66,8 @@ export default async function Home() {
       <Sidebar className='hidden md:block md:col-span-1' sidebarItems={session?.user?.sidebar || ['FEED', 'DISCUSSIONS', 'NEWS']} currentScreen={session?.user?.homeScreen || 'FEED'} />
 
 
-        {/* @ts-expect-error Server Component */}
-        <div className='md:col-span-2'>{session ? <CustomFeed /> : <GeneralFeed />}</div>
+
+        <div className='md:col-span-2'>{getFeed()}</div>
 
         {/* discussion info */}
         <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last md:col-span-1'>

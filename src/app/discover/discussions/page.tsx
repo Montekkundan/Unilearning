@@ -1,12 +1,13 @@
 
 import SearchBar from '@/components/SearchBar'
 import { Sidebar } from '@/components/Sidebar'
-import CustomFeed from '@/components/homepage/CustomFeed'
-import GeneralFeed from '@/components/homepage/GeneralFeed'
+import CustomFeed from '@/components/FEED/CustomFeed'
+import GeneralFeed from '@/components/FEED/GeneralFeed'
 import { buttonVariants } from '@/components/ui/Button'
 import { getAuthSession } from '@/lib/auth'
 import { Home as HomeIcon } from 'lucide-react'
 import Link from 'next/link'
+import GeneralDiscussionFeed from '@/components/DISCUSSIONS/GeneralDiscussionFeed'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -31,7 +32,6 @@ export default async function Home() {
        
 
         {/* discussion info */}
-        
 
         <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last md:col-span-1'>
           <div className='bg-emerald-100  px-6 py-4'>
