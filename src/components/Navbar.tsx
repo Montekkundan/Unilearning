@@ -5,6 +5,7 @@ import { getAuthSession } from '@/lib/auth'
 import { UserAccountNav } from './UserAccountNav'
 import { ThemeToggle } from './ThemeToggle'
 import { NavMenu } from './NavMenu'
+import { NAME } from '@/lib/constants'
 
 
 const Navbar = async () => {
@@ -18,7 +19,7 @@ const Navbar = async () => {
         {/* logo */}
         <a href='/' className='flex gap-2 items-center'>
           <Icons.logo className='h-8 w-8 sm:h-6 sm:w-6 ' />
-          <p className='hidden text-zinc-700  text-sm font-medium md:block'>Unilearning</p>
+          <p className='hidden text-zinc-700  text-sm font-medium md:block'>{NAME}</p>
         </a>
 
         <NavMenu />

@@ -1,6 +1,7 @@
 import { Icons } from '@/components/Icons'
 import Link from 'next/link'
 import UserAuthForm from './UserAuthFrom'
+import { NAME } from '@/lib/constants'
 
 const SignIn = () => {
   return (
@@ -19,7 +20,7 @@ const SignIn = () => {
         <UserAuthForm />
 
       <p className='px-8 text-center text-sm text-muted-foreground'>
-        New to Unilearning?{' '}
+        New to {NAME}?{' '}
         <Link
           href='/sign-up'
           className='hover:text-brand text-sm underline underline-offset-4'>

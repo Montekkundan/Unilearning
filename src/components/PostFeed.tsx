@@ -60,7 +60,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, discussionName }) => {
         }, 0)
 
         const currentVote = post.votes.find(
-          (vote) => vote.userId === session?.user.id
+          (vote: { userId: string | undefined }) => vote.userId === session?.user.id
         )
 
         if (index === posts.length - 1) {
@@ -73,6 +73,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, discussionName }) => {
                 discussionName={post.discussion.name}
                 votesAmt={votesAmt}
                 currentVote={currentVote}
+                session={session}
               />
             </li>
           )
@@ -85,6 +86,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, discussionName }) => {
               discussionName={post.discussion.name}
               votesAmt={votesAmt}
               currentVote={currentVote}
+              session={session}
             />
           )
         }

@@ -1,6 +1,6 @@
-# Unilearning
+# Learnivore
 
-Welcome to Unilearning, an interactive platform where learners and enthusiasts around the world gather to discuss, share knowledge, and learn about programming.
+Welcome to Learnivore, an interactive platform where learners and enthusiasts around the world gather to discuss, share knowledge, and learn about programming.
 
 
 ## Table of Contents
@@ -12,7 +12,7 @@ Welcome to Unilearning, an interactive platform where learners and enthusiasts a
 6. [License](#license)
 
 ## About
-Unilearning is designed to be a blend of popular platforms like Reddit and StackOverflow, focusing on providing a space where anyone can ask, answer, discuss, and learn about various programming topics.
+Learnivore is designed to be a blend of popular platforms like Reddit and StackOverflow, focusing on providing a space where anyone can ask, answer, discuss, and learn about various programming topics.
 
 ## Features
 - Create and manage discussions
@@ -22,7 +22,7 @@ Unilearning is designed to be a blend of popular platforms like Reddit and Stack
 - Search functionality for easy navigation
 
 ## Installation
-To get Unilearning running locally on your machine, follow these steps:
+To get Learnivore running locally on your machine, follow these steps:
 
 **Prerequisites:**
 - Node.js installed on your machine
@@ -77,7 +77,7 @@ REDIS_SECRET=
 ```
 
 ## Usage
-You can access Unilearning from http://localhost:3000 (or the port you specified) in your browser.
+You can access Learnivore from http://localhost:3000 (or the port you specified) in your browser.
 
 ## Contribution
 We appreciate contributions of any kind. For major changes, please open an issue first to discuss what you would like to change. Pull requests are welcome.

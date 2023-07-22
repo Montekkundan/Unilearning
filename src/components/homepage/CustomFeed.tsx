@@ -3,7 +3,6 @@ import { getAuthSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import PostFeed from '../PostFeed'
 import { notFound } from 'next/navigation'
-import { Button } from '@/components/ui/Button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 
 const CustomFeed = async () => {

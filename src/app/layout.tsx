@@ -6,11 +6,12 @@ import { Toaster } from '@/components/ui/Toaster'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Providers from '@/components/Providers'
+import { NAME } from '@/lib/constants'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Unilearning',
+  title: NAME,
   description: 'A place to learn and share knowledge',
 }
 

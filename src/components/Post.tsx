@@ -2,11 +2,12 @@
 
 import { formatTimeToNow } from '@/lib/utils'
 import { Post, User, Vote } from '@prisma/client'
-import { MessageSquare } from 'lucide-react'
+import { MessageSquare, Trash2  } from 'lucide-react'
 import Link from 'next/link'
 import { FC, useRef } from 'react'
 import EditorOutput from './EditorOutput'
 import PostVoteClient from './post-vote/PostVoteClient'
+import DeleteButton from './DeleteButton'
 
 type PartialVote = Pick<Vote, 'type'>
 
@@ -19,6 +20,7 @@ interface PostProps {
   discussionName: string
   currentVote?: PartialVote
   commentAmt: number
+  session: any
 }
 
 const Post: FC<PostProps> = ({
@@ -27,6 +29,7 @@ const Post: FC<PostProps> = ({
   currentVote: _currentVote,
   discussionName,
   commentAmt,
+  session,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null)
 
@@ -40,7 +43,8 @@ const Post: FC<PostProps> = ({
         />
 
         <div className='w-0 flex-1'>
-          <div className='max-h-40 mt-1 text-xs text-gray-500'>
+          <div className='max-h-40 mt-1 text-xs text-gray-500 flex justify-between'>
+            <div>
             {discussionName ? (
               <>
                 <a
@@ -53,12 +57,19 @@ const Post: FC<PostProps> = ({
             ) : null}
             <span>Posted by u/{post.author.username}</span>{' '}
             {formatTimeToNow(new Date(post.createdAt))}
+            </div>
+            <div>
+            {post.authorId === session?.user?.id ? (
+                 <DeleteButton postId={post.id}/>
+              ) : null}
+            </div>
           </div>
           <a href={`/uni/${discussionName}/post/${post.id}`}>
             <h1 className='text-lg font-semibold py-2 leading-6 text-gray-900'>
               {post.title}
             </h1>
           </a>
+         
 
           <div
             className='relative text-sm max-h-40 w-full overflow-clip'
